@@ -16,7 +16,7 @@ fs.readFile(__dirname + '/Library.xml', (err, data) => {
     parser.parseString(data, function (err, result) {
         if (err) throw err;
         var myObject = result.plist.dict[0].dict[0].dict;
-        var objectStr = "{" ;
+        var objectStr = "[{" ;
 
         for (i = 0; i < Object.keys(myObject).length; i++) {
             objectStr += '"' + myObject[i].key[0] + '": ';
@@ -31,6 +31,7 @@ fs.readFile(__dirname + '/Library.xml', (err, data) => {
             // objectStr +=  '"' + myObject[i].key[5] + '": ';
             // objectStr +=  myObject[i].integer[2] + " \n },";
         }
+    objectStr = objectStr.substring(",", objectStr.length - 1) + "}]";
         fs.writeFile("Object.json", objectStr, (err) => {
             if (err) throw err;
             console.log(Object.keys(myObject).length);
