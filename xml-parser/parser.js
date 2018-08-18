@@ -11,14 +11,14 @@ fs.readFile(__dirname + '/Library.xml', (err, data) => {
         }
         throw err;
     }
-    parser.parseString(data, (err, result)  => {
+    parser.parseString(data, (err, res)  => {
         if (err) throw err;
-        var myObject = result.plist.dict[0].dict[0].dict;
+        var myObject = res.plist.dict[0].dict[0].dict;
         var objectStr = '{\n\t"Tracks": {\n';
         var objLength  = Object.keys(myObject).length;
 
         for (i = 0; i < objLength; i++) {
-            objectStr += '\t\t"' + (i+1) + '": {\n';
+            objectStr += '\t\t"T' + (i+1) + '": {\n';
             objectStr +=  '\t\t\t"' + myObject[i].key[1] + '": ';
             objectStr +=  '"' + myObject[i].string[0] + '",\n';
             objectStr +=  '\t\t\t"' + myObject[i].key[2] + '": ';

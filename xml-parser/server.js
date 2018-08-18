@@ -34,6 +34,14 @@ app.get("/all", function(req, res) {
   res.json(musicData);
 });
 
+function shuffle(){
+    return Math.floor(Math.random() * trackCount + 1);  
+}
+
+function getTrackLocation(trackID) {
+    return musicData.Tracks[trackID].Location;
+}
+
 // Starts the server to begin listening
 // =============================================================
 app.listen(PORT, function() {

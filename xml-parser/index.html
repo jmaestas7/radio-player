@@ -10,15 +10,34 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
+        <script src="./jQuery-3.3.1.js"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <button name="play">Play</button>
-        <button name="pause">Pause</button>
-        <button name="next">Next</button>
+        <button id="play">Load Song</button>
+        <!-- <button id="pause">Pause</button>
+        <button id="next">Next</button> -->
+
+        <audio controls id="audio">
+            
+        </audio>
         
-        <script src="" async defer></script>
+        <script type="text/javascript">
+            var data =  ".\\musicData.json";
+
+            $("#play").on("click", function() {
+                $.getJSON('musicData.json', function(data) {
+                    // $.each(data.Tracks, function(i, f) {
+                        // var location = JSON.stringify(data.Tracks.T1.Location)
+                        var location = ".//test.mp3"
+                        console.log(location);
+                        $("#audio").append('<source src="' + location + '" type="audio/mpeg">');
+                    // });
+                });
+            });
+            
+        </script>
     </body>
 </html>
