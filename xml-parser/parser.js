@@ -25,9 +25,9 @@ fs.readFile(__dirname + '/Music.xml', (err, data) => {
             objectStr +=  '"' + myObject[i].string[1] + '",\n';
             objectStr += '\t"Location": "' + myObject[i].string[myObject[i].string.length - 1] + '"\n\t},\n';
         }
-        objectStr = objectStr.replace(
-            /file:\\localhost\\C:\\Users\\Jarred\Desktop\radio-player\\xml-parser\working\\public\\music\singles%20(Heresey)%202-23-18/g,
-            "/music/singles");
+
+        objectStr = objectStr.substring(0, objectStr.length-2);
+        objectStr += "\n\t}\n}";
 
         fs.writeFile("musicData.json", objectStr, (err) => {
             if (err) throw err;
