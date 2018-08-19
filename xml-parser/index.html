@@ -32,7 +32,6 @@
         <script type="text/javascript">
             $("#play").on("click", function() {
                 $.get('/api/', function(data) {
-                    var info = "";
                     $("#name").text(data[0].Name);
                     $("#artist").text(data[0].Artist);
                     var tLocation = data[0].Location
