@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# Media Files
+*.mmp3
+
 # Runtime data
 pids
 *.pid
