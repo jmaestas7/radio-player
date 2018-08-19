@@ -10,31 +10,37 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
-        <script src="./jQuery-3.3.1.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     </head>
     <body>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <h1 id="name"></h1>
+        <h2 id="artist"></h1>
+        <p id="location"></p>       
         <button id="play">Load Song</button>
         <!-- <button id="pause">Pause</button>
         <button id="next">Next</button> -->
-
+        <img src="public/assets/images/react-logo.png">
         <audio controls id="audio">
-            
         </audio>
         
         <script type="text/javascript">
-            var data =  ".\\musicData.json";
-
             $("#play").on("click", function() {
-                $.getJSON('musicData.json', function(data) {
-                    // $.each(data.Tracks, function(i, f) {
-                        // var location = JSON.stringify(data.Tracks.T1.Location)
-                        var location = ".//test.mp3"
-                        console.log(location);
-                        $("#audio").append('<source src="' + location + '" type="audio/mpeg">');
-                    // });
+                $.get('/api/', function(data) {
+                    var info = "";
+                    $("#name").text(data[0].Name);
+                    $("#artist").text(data[0].Artist);
+                    var tLocation = data[0].Location
+                    // tLocation = tLocation.replace("file://localhost/C:", "./musicFiles");
+                    // tLocation = tLocation.replace(/%20/g, "_");
+                    tLocation = "/public/test.mp3"
+                    $("#location").text(tLocation);
+                    $("#audio").append('<source src="' + tLocation + '" type="audio/mpeg">');
                 });
             });
             
