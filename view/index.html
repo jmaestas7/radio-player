@@ -53,10 +53,10 @@
                             "/music/singles");
                         $('audio').attr('src', loc);
                         if (i === data.length - 1) i = 0;
-                        else i ++;
+                        else i++;
                     });
                 };
-                
+
                 loadAndNext(update(i), i);
 
                 $("#next").click(function () {
@@ -71,6 +71,11 @@
                         console.log(i);
                         loadAndNext(update(i), i);
                     });
+                });
+
+                $("#audio").bind('ended', function () {
+                    $('audio').attr('src', '');
+                    loadAndNext(update(i), i);
                 });
             });
         </script>

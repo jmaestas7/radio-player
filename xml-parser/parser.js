@@ -27,9 +27,9 @@ fs.readFile(__dirname + '/Music.xml', (err, data) => {
         }
 
         objectStr = objectStr.substring(0, objectStr.length-2);
-        objectStr += "\n\t}\n}";
+        objectStr += "\n]";
 
-        fs.writeFile("musicData.json", objectStr, (err) => {
+        fs.writeFile(__dirname + "./../public/json/musicData.json", objectStr, (err) => {
             if (err) throw err;
             console.log(Object.keys(myObject).length + " entries in object");
             console.log("The file was succesfully saved!");
