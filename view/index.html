@@ -12,73 +12,93 @@
     <title>My Little Radio</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+    <script src="/js/jQuery-3.3.1.js"></script>
+    <script src="/js/popper-1.14.4.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <h1 id="name"></h1>
-    <h2 id="artist">
-        </h1>
-        <p id="location"></p>
-        <button id="next">Next Song</button>
-        <button id="shuffle">Shuffle Song</button>
-        <!-- <button id="pause">Pause</button>
-        <button id="next">Next</button> -->
-        <audio controls id="audio" preload="auto" autoplay>
-            <source id="source" src="/music/test.mp3" type="audio/mpeg">
-        </audio>
-        <script type="text/javascript">
-            $(document).ready(function () {
-                var i = 0;
-                var source = $("#source");
+    <![endif]-->
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-auto align-content-center">
+                    <img id="artwork" src="/images/no-cover.jpg" class="rounded mx-auto d-block" alt"/images/no-cover.jpg">
+            </div>
+        </div>
+    <!-- audi info row -->
+        <div class="row justify-content-md-center">
+            <div id="music-info" class="col-md-auto align-content-center">
+                <p id="name"></p>
+                <p id="artist"></p>
+            </div>
+        </div>
+        <!-- audio player row -->
+        <div class="row justify-content-center">
+            <div class="col-2">
+                <i id="next" class="fas fa-angle-double-right"></i>
+                <i id="shuffle" class="fas fa-random"></i>
+            </div>
+            <div class="col-10">
+                <div class="player-box" style="position:relative;">
+                    <audio controls id="audio" preload="auto" style="width: 100%" autoplay>
+                        <source id="source" src="/music/test.mp3" type="audio/mpeg">
+                    </audio>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var i = 0;
+            var source = $("#source");
 
-                function update(num) {
-                    $.get('/api/', function (data) {
-                        $("#name").text(data[num].Name);
-                        $("#artist").text(data[num].Artist);
-                    });
-                };
+            function update(num) {
+                $.get('/api/', function (data) {
+                    $("#name").text(data[num].Name);
+                    $("#artist").text(data[num].Artist);
+                });
+            };
 
-                function loadAndNext(loc, num) {
-                    $.get('/api/', function (data) {
-                        var loc = "";
-                        loc = data[num].Location
-                        loc = loc.replace(
-                            "file://localhost/C:/Users/Jarred/Desktop/radio-player/xml-parser/working/public/music/singles",
-                            "/music/singles");
-                        $('audio').attr('src', loc);
-                        if (i === data.length - 1) i = 0;
-                        else i++;
-                    });
-                };
+            function loadAndNext(loc, num) {
+                $.get('/api/', function (data) {
+                    var loc = "";
+                    loc = data[num].Location
+                    loc = loc.replace(
+                        "file://localhost/C:/Users/Jarred/Desktop/radio-player/xml-parser/working/public/music/singles",
+                        "/music/singles");
+                    $('audio').attr('src', loc);
+                    if (i === data.length - 1) i = 0;
+                    else i++;
+                });
+            };
 
+            loadAndNext(update(i), i);
+
+            $("#next").click(function () {
+                $('audio').attr('src', '');
                 loadAndNext(update(i), i);
+            });
 
-                $("#next").click(function () {
-                    $('audio').attr('src', '');
-                    loadAndNext(update(i), i);
-                });
-
-                $("#shuffle").click(function () {
-                    $('audio').attr('src', '');
-                    $.get('/api/', function (data) {
-                        var i = Math.floor((Math.random() * data.length) - 1);
-                        console.log(i);
-                        loadAndNext(update(i), i);
-                    });
-                });
-
-                $("#audio").bind('ended', function () {
-                    $('audio').attr('src', '');
+            $("#shuffle").click(function () {
+                $('audio').attr('src', '');
+                $.get('/api/', function (data) {
+                    var i = Math.floor((Math.random() * data.length) - 1);
+                    console.log(i);
                     loadAndNext(update(i), i);
                 });
             });
-        </script>
+
+            $("#audio").bind('ended', function () {
+                $('audio').attr('src', '');
+                loadAndNext(update(i), i);
+            });
+        });
+    </script>
 </body>
 
 </html>
